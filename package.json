@@ -1,0 +1,33 @@
+{
+  "name": "securevest-solutions",
+  "version": "2.0.0",
+  "description": "Modern frontend redesign for SecureVest Solutions website",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [
+    "financial-planning",
+    "insurance",
+    "wealth-management",
+    "securevest",
+    "nextjs",
+    "react",
+    "typescript"
+  ],
+  "author": "SecureVest Solutions",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^16.4.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}
