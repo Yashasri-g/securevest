@@ -12,23 +12,24 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero / Header */}
-      <section className="section section-bg-slate" style={{ paddingTop: '4rem', paddingBottom: '3.5rem' }}>
-        <div className="container container-narrow" style={{ textAlign: 'center' }}>
-          <span className="section-eyebrow">Our Advisory Services</span>
-          <h1>Secure Your Future With Comprehensive Planning</h1>
-          <p className="lead">
+      <section className="page-hero-banner" aria-label="Services Overview">
+        <div className="page-hero-watermark" aria-hidden="true">SERVICES</div>
+        <div className="container">
+          <span className="page-hero-eyebrow">Our Fiduciary Advisory Services</span>
+          <h1 className="page-hero-title">Secure Your Future With Comprehensive Planning</h1>
+          <p className="page-hero-lead">
             Comprehensive planning for families and businesses to protect assets, preserve wealth, and maximize tax benefits through every stage of life.
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '2rem', flexWrap: 'wrap' }}>
+          <div className="page-hero-actions">
             <a
               href="https://calendly.com/securevestsolutions/appointment"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-accent"
+              className="btn btn-accent btn-lg"
             >
               Schedule Free Consultation
             </a>
-            <Link href="/contact" className="btn btn-outline">
+            <Link href="/contact" className="btn btn-outline-light btn-lg">
               Request Information
             </Link>
           </div>

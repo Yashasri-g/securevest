@@ -32,11 +32,14 @@ export default function ArticleSmartFinancialPlanning() {
 
       <div className="article-hero-image">
         <img
-          src="/images/financial-planner.jpg"
-          alt="Life planner notebook and keyboard on desk"
+          src="/images/advisor-desk.jpg"
+          alt="Financial advisor on phone reviewing desktop financial planning charts"
           width={980}
           height={480}
         />
+        <p style={{ textAlign: 'center', marginTop: '0.75rem', fontSize: '0.9rem', color: 'var(--color-slate-500)', fontStyle: 'italic' }}>
+          Secure your future
+        </p>
       </div>
 
       <div className="article-content">

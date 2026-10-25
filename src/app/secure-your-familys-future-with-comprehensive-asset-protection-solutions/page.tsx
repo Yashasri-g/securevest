@@ -32,11 +32,14 @@ export default function ArticleComprehensiveAssetProtection() {
 
       <div className="article-hero-image">
         <img
-          src="/images/family-home.jpg"
-          alt="Family home representing shielded assets and legacy"
+          src="/images/broken-phone-insurance.jpg"
+          alt="Smartphone with cracked screen displaying INSURANCE on display"
           width={980}
           height={480}
         />
+        <p style={{ textAlign: 'center', marginTop: '0.75rem', fontSize: '0.9rem', color: 'var(--color-slate-500)', fontStyle: 'italic' }}>
+          Secure your future
+        </p>
       </div>
 
       <div className="article-content">

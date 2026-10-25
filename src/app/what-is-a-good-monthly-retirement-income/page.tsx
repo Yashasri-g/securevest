@@ -32,8 +32,8 @@ export default function ArticleRetirementIncome() {
 
       <div className="article-hero-image">
         <img
-          src="/images/senior-bench.jpg"
-          alt="Retired couple discussing their plans on a park bench"
+          src="/images/retirement-laptop.png"
+          alt="Retired couple planning their monthly retirement budget"
           width={980}
           height={480}
         />

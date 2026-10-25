@@ -32,8 +32,8 @@ export default function ArticleHighCosts2026() {
 
       <div className="article-hero-image">
         <img
-          src="/images/advisor-desk.jpg"
-          alt="Financial advisor reviewing market data on computer"
+          src="/images/market-family.png"
+          alt="Family viewing market volatility and economic horizon"
           width={980}
           height={480}
         />
