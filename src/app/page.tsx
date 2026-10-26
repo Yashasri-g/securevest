@@ -10,11 +10,19 @@ import PillarsCanvasCards from '@/components/PillarsCanvasCards';
 import PillarsBackdrop from '@/components/PillarsBackdrop';
 import CallingAdvisorStage from '@/components/CallingAdvisorStage';
 import { BLOG_POSTS } from '@/data/blogPosts';
+import { pageMetadata } from '@/lib/site';
+
+const HOME_TITLE = "Secure Your Family's Financial Future Today | SecureVest Solutions";
 
 export const metadata: Metadata = {
-  title: "Secure Your Family's Financial Future Today | SecureVest Solutions",
-  description:
-    'Independent fiduciary wealth advisory, tailored family asset security, term life insurance, retirement income strategies, and living trusts.',
+  ...pageMetadata({
+    title: HOME_TITLE,
+    description:
+      'Independent fiduciary wealth advisory, tailored family asset security, term life insurance, retirement income strategies, and living trusts.',
+    path: '/',
+  }),
+  // Absolute so the "%s | SecureVest Solutions" template isn't appended twice.
+  title: { absolute: HOME_TITLE },
 };
 
 export default function HomePage() {

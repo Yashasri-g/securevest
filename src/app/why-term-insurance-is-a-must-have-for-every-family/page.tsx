@@ -1,17 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { postMetadata } from '@/lib/site';
+import { ArticleJsonLd } from '@/components/JsonLd';
 import ThemeButton from '@/components/ThemeButton';
 
-export const metadata: Metadata = {
-  title: 'Why Term Insurance is a Must-Have for Every Family',
-  description:
-    'Learn why term life insurance is the most cost-effective and essential financial protection tool for families, how premiums are determined, and how to choose the right policy.',
-};
+export const metadata: Metadata = postMetadata(
+  'why-term-insurance-is-a-must-have-for-every-family',
+  'Why Term Insurance is a Must-Have for Every Family',
+  'Learn why term life insurance is the most cost-effective and essential financial protection tool for families, how premiums are determined, and how to choose the right policy.',
+);
 
 export default function ArticleTermInsurance() {
   return (
     <article className="container" style={{ paddingBottom: '5rem' }}>
+      <ArticleJsonLd slug="why-term-insurance-is-a-must-have-for-every-family" />
       <header className="article-header">
         <ul className="breadcrumbs" style={{ justifyContent: 'center' }}>
           <li><Link href="/">Home</Link></li>
@@ -114,7 +117,7 @@ export default function ArticleTermInsurance() {
           </li>
         </ul>
         <p>
-          Lastly, it's advisable to seek professional guidance if you feel uncertain. Financial advisors at SecureVest Solutions can help tailor a term insurance policy to your specific circumstances, ensuring complete coverage at the lowest possible cost.
+          Lastly, it&apos;s advisable to seek professional guidance if you feel uncertain. Financial advisors at SecureVest Solutions can help tailor a term insurance policy to your specific circumstances, ensuring complete coverage at the lowest possible cost.
         </p>
 
         {/* Author Box */}

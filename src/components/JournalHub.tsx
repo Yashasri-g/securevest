@@ -202,7 +202,7 @@ export default function JournalHub({ posts }: JournalHubProps) {
                 <div className="contrarian-divider" aria-hidden="true" />
 
                 <p className="contrarian-desc">
-                  Speak directly with a SecureVest fiduciary planner. We will analyze your family's asset protection posture, retirement readiness, and estate safeguards at no cost.
+                  Speak directly with a SecureVest fiduciary planner. We will analyze your family&apos;s asset protection posture, retirement readiness, and estate safeguards at no cost.
                 </p>
 
                 <div className="contrarian-actions">

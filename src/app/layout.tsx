@@ -1,15 +1,18 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import ClientShell from '@/components/ClientShell';
+import JsonLd from '@/components/JsonLd';
+import { DEFAULT_OG_IMAGE, SITE_EMAIL, SITE_NAME, SITE_PHONE, SITE_URL } from '@/lib/site';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://securevestsolutions.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'SecureVest Solutions | Protect Your Family with Wealth, Life & Retirement Strategies',
-    template: '%s | SecureVest Solutions',
+    template: `%s | ${SITE_NAME}`,
   },
   description:
     'At SecureVest Solutions, we specialize in helping families protect their assets through tailored insurance and investment strategies. Plan Today ! Protect Tomorrow !',
+  applicationName: SITE_NAME,
   keywords: [
     'financial planning',
     'life insurance',
@@ -21,27 +24,51 @@ export const metadata: Metadata = {
     'asset protection',
     'SecureVest Solutions',
   ],
-  authors: [{ name: 'SecureVest Solutions' }],
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://securevestsolutions.com',
-    siteName: 'SecureVest Solutions',
-    title: 'SecureVest Solutions | Protect Your Family with Life and Term Insurance',
-    description:
-      'At SecureVest Solutions, we specialize in helping families protect their assets through tailored insurance and investment strategies.',
-    images: [
-      {
-        url: '/images/logo.png',
-        width: 768,
-        height: 126,
-        alt: 'SecureVest Solutions Logo',
-      },
-    ],
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  formatDetection: { telephone: true, email: true, address: false },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
-  icons: {
-    icon: '/images/logo.png',
-  },
+  // Pages set their own canonical, Open Graph and Twitter cards via pageMetadata().
+  openGraph: { type: 'website', locale: 'en_US', siteName: SITE_NAME },
+  icons: { icon: '/images/logo.png', apple: '/images/logo.png' },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#070e1c',
+  width: 'device-width',
+  initialScale: 1,
+};
+
+const ORGANIZATION_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'FinancialService',
+      '@id': `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: `${SITE_URL}/images/logo.png`,
+      image: `${SITE_URL}${DEFAULT_OG_IMAGE}`,
+      telephone: SITE_PHONE,
+      email: SITE_EMAIL,
+      openingHours: 'Mo-Fr 09:00-17:00',
+      description:
+        'Comprehensive financial solutions for family asset security, term life insurance, retirement planning, and tax optimization.',
+      slogan: 'Plan Today ! Protect Tomorrow !',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      publisher: { '@id': `${SITE_URL}/#organization` },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -49,29 +76,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FinancialService',
-    name: 'SecureVest Solutions',
-    url: 'https://securevestsolutions.com',
-    logo: 'https://securevestsolutions.com/images/logo.png',
-    telephone: '+1-740-303-2525',
-    email: 'contact@securevestsolutions.com',
-    openingHours: 'Mo-Fr 09:00-17:00',
-    description:
-      'Comprehensive financial solutions for family asset security, term life insurance, retirement planning, and tax optimization.',
-    slogan: 'Plan Today ! Protect Tomorrow !',
-  };
-
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </head>
       <body>
+        <JsonLd data={ORGANIZATION_JSON_LD} />
         <ClientShell>{children}</ClientShell>
       </body>
     </html>

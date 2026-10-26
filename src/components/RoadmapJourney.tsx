@@ -185,29 +185,6 @@ function DesktopRoadmap({ onOpenBooking }: RoadmapJourneyProps) {
   });
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.6 });
 
-  // measure the path once per geometry: total length and where each node sits on it
-  useEffect(() => {
-    const path = curveRef.current;
-    if (!path || !geo) return;
-    const total = path.getTotalLength();
-    totalLen.current = total;
-    thresholds.current = geo.pts.map((p) => {
-      let lo = 0;
-      let hi = total;
-      for (let k = 0; k < 24; k++) {
-        const mid = (lo + hi) / 2;
-        if (path.getPointAtLength(mid).x < p.x) lo = mid;
-        else hi = mid;
-      }
-      return lo / total;
-    });
-    if (progressPathRef.current) {
-      progressPathRef.current.style.strokeDasharray = `${total}`;
-    }
-    apply(progress.get());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geo]);
-
   const apply = useCallback(
     (v: number) => {
       const path = curveRef.current;
@@ -231,6 +208,28 @@ function DesktopRoadmap({ onOpenBooking }: RoadmapJourneyProps) {
     },
     []
   );
+
+  // measure the path once per geometry: total length and where each node sits on it
+  useEffect(() => {
+    const path = curveRef.current;
+    if (!path || !geo) return;
+    const total = path.getTotalLength();
+    totalLen.current = total;
+    thresholds.current = geo.pts.map((p) => {
+      let lo = 0;
+      let hi = total;
+      for (let k = 0; k < 24; k++) {
+        const mid = (lo + hi) / 2;
+        if (path.getPointAtLength(mid).x < p.x) lo = mid;
+        else hi = mid;
+      }
+      return lo / total;
+    });
+    if (progressPathRef.current) {
+      progressPathRef.current.style.strokeDasharray = `${total}`;
+    }
+    apply(progress.get());
+  }, [geo, apply, progress]);
 
   useMotionValueEvent(progress, 'change', apply);
 

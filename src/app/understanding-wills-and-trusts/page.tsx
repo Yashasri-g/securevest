@@ -1,14 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { postMetadata } from '@/lib/site';
+import { ArticleJsonLd } from '@/components/JsonLd';
 import FaqAccordion from '@/components/FaqAccordion';
 import ThemeButton from '@/components/ThemeButton';
 
-export const metadata: Metadata = {
-  title: 'Understanding Wills and Trusts: What You Need to Know',
-  description:
-    'Why you should have a Living Will and Trust, common myths, and 20 detailed plain-English answers to top estate planning questions.',
-};
+export const metadata: Metadata = postMetadata(
+  'understanding-wills-and-trusts',
+  'Understanding Wills and Trusts: What You Need to Know',
+  'Why you should have a Living Will and Trust, common myths, and 20 detailed plain-English answers to top estate planning questions.',
+);
 
 export default function ArticleWillsTrusts() {
   const trustFaqs = [
@@ -96,6 +98,7 @@ export default function ArticleWillsTrusts() {
 
   return (
     <article className="container" style={{ paddingBottom: '5rem' }}>
+      <ArticleJsonLd slug="understanding-wills-and-trusts" />
       <header className="article-header">
         <ul className="breadcrumbs" style={{ justifyContent: 'center' }}>
           <li><Link href="/">Home</Link></li>

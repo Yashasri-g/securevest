@@ -1,17 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { postMetadata } from '@/lib/site';
+import { ArticleJsonLd } from '@/components/JsonLd';
 import ThemeButton from '@/components/ThemeButton';
 
-export const metadata: Metadata = {
-  title: "Secure Your Family's Future with Smart Financial Planning Solutions",
-  description:
-    'Discover how our integrated approach to goal setting, educational funding, risk management, and estate planning delivers robust multi-generational wealth.',
-};
+export const metadata: Metadata = postMetadata(
+  'secure-your-familys-future-with-smart-financial-planning-solutions',
+  "Secure Your Family's Future with Smart Financial Planning Solutions",
+  'Discover how our integrated approach to goal setting, educational funding, risk management, and estate planning delivers robust multi-generational wealth.',
+);
 
 export default function ArticleSmartFinancialPlanning() {
   return (
     <article className="container" style={{ paddingBottom: '5rem' }}>
+      <ArticleJsonLd slug="secure-your-familys-future-with-smart-financial-planning-solutions" />
       <header className="article-header">
         <ul className="breadcrumbs" style={{ justifyContent: 'center' }}>
           <li><Link href="/">Home</Link></li>
@@ -21,7 +24,7 @@ export default function ArticleSmartFinancialPlanning() {
           <li className="breadcrumbs-current">Smart Financial Planning</li>
         </ul>
         <span className="badge badge-cyan" style={{ marginBottom: '1rem' }}>Financial Planning</span>
-        <h1>Secure Your Family's Future with Smart Financial Planning Solutions</h1>
+        <h1>Secure Your Family&apos;s Future with Smart Financial Planning Solutions</h1>
         <div className="article-meta-bar">
           <span>Published on May 8, 2024</span>
           <span>•</span>
@@ -45,7 +48,7 @@ export default function ArticleSmartFinancialPlanning() {
 
       <div className="article-content">
         <p className="lead">
-          At <strong>SecureVest Solutions</strong>, we specialize in asset protection, insurance, and tax-saving strategies. Our comprehensive services include goal setting, retirement planning, educational funding, risk management, and estate planning to ensure your family's financial security and peace of mind for the future. Let us help you achieve your financial goals.
+          At <strong>SecureVest Solutions</strong>, we specialize in asset protection, insurance, and tax-saving strategies. Our comprehensive services include goal setting, retirement planning, educational funding, risk management, and estate planning to ensure your family&apos;s financial security and peace of mind for the future. Let us help you achieve your financial goals.
         </p>
 
         <h2>Strategic Roadmaps for Growing Families</h2>
@@ -72,7 +75,7 @@ export default function ArticleSmartFinancialPlanning() {
         <div className="article-callout">
           <h4>Plan Today ! Protect Tomorrow !</h4>
           <p>
-            You don't have to navigate these decisions alone. Schedule a consultation with our licensed advisory team to review your financial goals and establish a personalized strategy today.
+            You don&apos;t have to navigate these decisions alone. Schedule a consultation with our licensed advisory team to review your financial goals and establish a personalized strategy today.
           </p>
         </div>
 

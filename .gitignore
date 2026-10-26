@@ -54,3 +54,6 @@ Thumbs.db
 
 # Vercel
 .vercel/
+
+# local verification builds
+.next-build/

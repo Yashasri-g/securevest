@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import BookingModal from './BookingModal';
+import LeadPopup from './LeadPopup';
 
 interface BookingContextType {
   openBooking: () => void;
@@ -30,6 +31,7 @@ export default function ClientShell({ children }: { children: React.ReactNode })
       <main id="main-content">{children}</main>
       <Footer />
       <BookingModal isOpen={isBookingOpen} onClose={closeBooking} />
+      <LeadPopup />
     </BookingContext.Provider>
   );
 }

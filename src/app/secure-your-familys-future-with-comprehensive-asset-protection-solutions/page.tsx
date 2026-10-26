@@ -1,17 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { postMetadata } from '@/lib/site';
+import { ArticleJsonLd } from '@/components/JsonLd';
 import ThemeButton from '@/components/ThemeButton';
 
-export const metadata: Metadata = {
-  title: "Secure Your Family's Future with Comprehensive Asset Protection Solutions",
-  description:
-    'At SecureVest Solutions, we specialize in helping families safeguard their assets through tailored insurance and investment strategies.',
-};
+export const metadata: Metadata = postMetadata(
+  'secure-your-familys-future-with-comprehensive-asset-protection-solutions',
+  "Secure Your Family's Future with Comprehensive Asset Protection Solutions",
+  'At SecureVest Solutions, we specialize in helping families safeguard their assets through tailored insurance and investment strategies.',
+);
 
 export default function ArticleComprehensiveAssetProtection() {
   return (
     <article className="container" style={{ paddingBottom: '5rem' }}>
+      <ArticleJsonLd slug="secure-your-familys-future-with-comprehensive-asset-protection-solutions" />
       <header className="article-header">
         <ul className="breadcrumbs" style={{ justifyContent: 'center' }}>
           <li><Link href="/">Home</Link></li>
@@ -21,7 +24,7 @@ export default function ArticleComprehensiveAssetProtection() {
           <li className="breadcrumbs-current">Asset Protection Solutions</li>
         </ul>
         <span className="badge badge-cyan" style={{ marginBottom: '1rem' }}>Asset Protection</span>
-        <h1>Secure Your Family's Future with Comprehensive Asset Protection Solutions</h1>
+        <h1>Secure Your Family&apos;s Future with Comprehensive Asset Protection Solutions</h1>
         <div className="article-meta-bar">
           <span>Published on May 8, 2024</span>
           <span>•</span>
@@ -45,7 +48,7 @@ export default function ArticleComprehensiveAssetProtection() {
 
       <div className="article-content">
         <p className="lead">
-          At <strong>SecureVest Solutions</strong>, we specialize in helping families safeguard their assets through tailored insurance and investment strategies. Our services include retirement planning, educational planning, and tax-saving solutions, ensuring your family's financial security and peace of mind for the future. Discover how we can assist you today.
+          At <strong>SecureVest Solutions</strong>, we specialize in helping families safeguard their assets through tailored insurance and investment strategies. Our services include retirement planning, educational planning, and tax-saving solutions, ensuring your family&apos;s financial security and peace of mind for the future. Discover how we can assist you today.
         </p>
 
         <h2>Comprehensive Asset Shielding</h2>
@@ -72,7 +75,7 @@ export default function ArticleComprehensiveAssetProtection() {
         <div className="article-callout">
           <h4>Start Your Assessment</h4>
           <p>
-            Whether you need to review existing insurance policies or build an overarching estate and retirement roadmap, our advisors provide objective, transparent guidance tailored specifically to your family's priorities.
+            Whether you need to review existing insurance policies or build an overarching estate and retirement roadmap, our advisors provide objective, transparent guidance tailored specifically to your family&apos;s priorities.
           </p>
         </div>
 

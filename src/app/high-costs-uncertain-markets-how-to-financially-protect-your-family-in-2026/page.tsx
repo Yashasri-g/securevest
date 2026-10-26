@@ -1,17 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { postMetadata } from '@/lib/site';
+import { ArticleJsonLd } from '@/components/JsonLd';
 import ThemeButton from '@/components/ThemeButton';
 
-export const metadata: Metadata = {
-  title: 'High Costs, Uncertain Markets: How to Financially Protect Your Family in 2026',
-  description:
-    'In times of high expenses and market volatility, learn the crucial steps to protect family income, preserve retirement savings, and plan ahead in 2026.',
-};
+export const metadata: Metadata = postMetadata(
+  'high-costs-uncertain-markets-how-to-financially-protect-your-family-in-2026',
+  'High Costs, Uncertain Markets: How to Financially Protect Your Family in 2026',
+  'In times of high expenses and market volatility, learn the crucial steps to protect family income, preserve retirement savings, and plan ahead in 2026.',
+);
 
 export default function ArticleHighCosts2026() {
   return (
     <article className="container" style={{ paddingBottom: '5rem' }}>
+      <ArticleJsonLd slug="high-costs-uncertain-markets-how-to-financially-protect-your-family-in-2026" />
       <header className="article-header">
         <ul className="breadcrumbs" style={{ justifyContent: 'center' }}>
           <li><Link href="/">Home</Link></li>

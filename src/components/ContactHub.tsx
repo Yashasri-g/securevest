@@ -13,14 +13,8 @@ export default function ContactHub() {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const planningFocusAreas = [
-    'Retirement Planning',
-    'Life & Term Insurance',
-    'Estate & Living Trusts',
-    'Tax & Wealth Strategy',
-    'General Consultation',
-  ];
+  const [isSending, setIsSending] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const validate = () => {
     const errs: Record<string, string> = {};
@@ -37,10 +31,32 @@ export default function ContactHub() {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
+    if (!validate()) return;
+
+    setIsSending(true);
+    setSubmitError('');
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'contact',
+          name: formData.firstName,
+          email: formData.email,
+          phone: formData.phone,
+          interest: formData.focusArea,
+          message: formData.message,
+          page: '/contact',
+        }),
+      });
+      if (!res.ok) throw new Error();
       setIsSubmitted(true);
+    } catch {
+      setSubmitError('We could not send your inquiry. Please try again or call (740) 303-2525.');
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -50,10 +66,6 @@ export default function ContactHub() {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
-  };
-
-  const handleFocusSelect = (area: string) => {
-    setFormData((prev) => ({ ...prev, focusArea: area }));
   };
 
   return (
@@ -353,11 +365,13 @@ export default function ContactHub() {
                   />
                 </div>
 
+                {submitError && <p className="compact-error" role="alert" style={{ textAlign: 'center' }}>{submitError}</p>}
+
                 {/* Centered Submit Button */}
                 <div className="compact-btn-row">
-                  <button type="submit" className="compact-submit-pill">
+                  <button type="submit" className="compact-submit-pill" disabled={isSending}>
                     <span className="pill-shimmer" aria-hidden="true" />
-                    <span className="pill-text">Submit Advisory Inquiry</span>
+                    <span className="pill-text">{isSending ? 'Sending…' : 'Submit Advisory Inquiry'}</span>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>

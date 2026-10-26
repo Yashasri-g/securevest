@@ -39,7 +39,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tags: ['Retirement Planning', 'Cash Flow'],
   },
   {
-    slug: 'blog-post1',
+    slug: 'understanding-wills-and-trusts',
     title: 'Understanding Wills and Trusts: What You Need to Know',
     date: '8/21/2025',
     readTime: '4 min read',
@@ -52,7 +52,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tags: ['Estate Planning', 'Living Trusts'],
   },
   {
-    slug: 'blog-post',
+    slug: 'why-term-insurance-is-a-must-have-for-every-family',
     title: 'Why Term Insurance is a Must-Have for Every Family',
     date: '7/28/2025',
     readTime: '5 min read',

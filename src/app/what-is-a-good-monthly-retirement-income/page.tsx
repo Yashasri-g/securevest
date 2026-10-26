@@ -1,17 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { postMetadata } from '@/lib/site';
+import { ArticleJsonLd } from '@/components/JsonLd';
 import ThemeButton from '@/components/ThemeButton';
 
-export const metadata: Metadata = {
-  title: 'What Is a Good Monthly Retirement Income?',
-  description:
-    'Planning for retirement isn’t just about saving—it’s about knowing how much income you’ll need each month. Explore the 70–80% rule, the 4% rule, and healthcare buffers.',
-};
+export const metadata: Metadata = postMetadata(
+  'what-is-a-good-monthly-retirement-income',
+  'What Is a Good Monthly Retirement Income?',
+  'Planning for retirement isn’t just about saving—it’s about knowing how much income you’ll need each month. Explore the 70–80% rule, the 4% rule, and healthcare buffers.',
+);
 
 export default function ArticleRetirementIncome() {
   return (
     <article className="container" style={{ paddingBottom: '5rem' }}>
+      <ArticleJsonLd slug="what-is-a-good-monthly-retirement-income" />
       <header className="article-header">
         <ul className="breadcrumbs" style={{ justifyContent: 'center' }}>
           <li><Link href="/">Home</Link></li>

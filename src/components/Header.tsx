@@ -25,10 +25,12 @@ export default function Header({ onOpenBooking }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile drawer on route navigation
-  useEffect(() => {
+  // Close mobile drawer on route navigation (state adjusted during render, not in an effect)
+  const [drawerPath, setDrawerPath] = useState(pathname);
+  if (drawerPath !== pathname) {
+    setDrawerPath(pathname);
     setIsMobileOpen(false);
-  }, [pathname]);
+  }
 
   const navItems = [
     { label: 'Home', href: '/' },
