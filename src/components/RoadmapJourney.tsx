@@ -1,6 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'framer-motion';
+import ThemeButton from '@/components/ThemeButton';
 
 interface RoadmapJourneyProps {
   onOpenBooking?: () => void;
@@ -21,7 +29,7 @@ const STEPS: StepDetail[] = [
     number: '01',
     tag: 'Foundation & Analysis',
     title: 'Discovery & Family Asset Audit',
-    duration: 'Week 1 - 2',
+    duration: 'Week 1 – 2',
     summary:
       'We begin with an in-depth, confidential assessment of your assets, liabilities, insurance policies, retirement accounts, and personal estate objectives.',
     deliverables: [
@@ -36,7 +44,7 @@ const STEPS: StepDetail[] = [
     number: '02',
     tag: 'Strategic Blueprint',
     title: 'Custom Strategy Architecture',
-    duration: 'Week 2 - 3',
+    duration: 'Week 2 – 3',
     summary:
       'Our senior advisors design a bespoke, holistic roadmap engineered to achieve your retirement lifestyle, protect family income, and optimize generational transfer.',
     deliverables: [
@@ -51,7 +59,7 @@ const STEPS: StepDetail[] = [
     number: '03',
     tag: 'Execution & Shielding',
     title: 'Implementation & Asset Shielding',
-    duration: 'Week 3 - 5',
+    duration: 'Week 3 – 5',
     summary:
       'We execute your strategy with precision, coordinating with top-rated insurance carriers, custodians, and estate attorneys to secure favorable terms.',
     deliverables: [
@@ -79,118 +87,412 @@ const STEPS: StepDetail[] = [
   },
 ];
 
-export default function RoadmapJourney({ onOpenBooking }: RoadmapJourneyProps) {
-  const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const activeStep = STEPS[activeStepIndex];
+const EASE = [0.22, 1, 0.36, 1] as const;
+const CALENDLY = 'https://calendly.com/securevestsolutions/appointment';
+
+/* -------------------------------------------------------------------------
+   Shared pieces
+   ------------------------------------------------------------------------- */
+
+function CheckMark({ drawn }: { drawn: boolean }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <motion.path
+        d="M5 12.5l4.5 4.5L19 7.5"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        initial={false}
+        animate={{ pathLength: drawn ? 1 : 0, opacity: drawn ? 1 : 0 }}
+        transition={{ duration: 0.45, ease: EASE }}
+      />
+    </svg>
+  );
+}
+
+function RoadmapCta({ onOpenBooking }: RoadmapJourneyProps) {
+  return (
+    <div className="rm-detail-cta">
+      <ThemeButton
+        variant="navy"
+        size="md"
+        {...(onOpenBooking
+          ? { onClick: onOpenBooking }
+          : { href: CALENDLY, target: '_blank', rel: 'noopener noreferrer' })}
+      >
+        Start Step 1: Complimentary Discovery
+      </ThemeButton>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------
+   Desktop: a rising wealth curve with scroll-driven progress
+   ------------------------------------------------------------------------- */
+
+const STAGE_H = 300;
+// vertical position of each milestone on the curve (fraction of stage height; lower = higher)
+const NODE_Y = [0.78, 0.58, 0.38, 0.17];
+
+function buildGeometry(width: number) {
+  const n = STEPS.length;
+  const colW = width / n;
+  const pts = STEPS.map((_, i) => ({ x: colW * (i + 0.5), y: STAGE_H * NODE_Y[i] }));
+  const start = { x: 0, y: STAGE_H * 0.9 };
+  const end = { x: width, y: STAGE_H * 0.06 };
+  const all = [start, ...pts, end];
+  // smooth cubic path with horizontal tangents between points (monotone-ish, no overshoot)
+  let d = `M ${all[0].x} ${all[0].y}`;
+  for (let i = 1; i < all.length; i++) {
+    const p0 = all[i - 1];
+    const p1 = all[i];
+    const mx = (p0.x + p1.x) / 2;
+    d += ` C ${mx} ${p0.y}, ${mx} ${p1.y}, ${p1.x} ${p1.y}`;
+  }
+  return { pts, d, width };
+}
+
+function DesktopRoadmap({ onOpenBooking }: RoadmapJourneyProps) {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const curveRef = useRef<SVGPathElement>(null);
+  const progressPathRef = useRef<SVGPathElement>(null);
+  const travelerRef = useRef<SVGGElement>(null);
+  const clipRectRef = useRef<SVGRectElement>(null);
+
+  const [width, setWidth] = useState(0);
+  const [lit, setLit] = useState(0);
+  const [active, setActive] = useState(0);
+  const lastScrollIdx = useRef(0);
+  const thresholds = useRef<number[]>([]);
+  const totalLen = useRef(0);
+
+  const geo = useMemo(() => (width > 0 ? buildGeometry(width) : null), [width]);
+
+  useLayoutEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const measure = () => setWidth(el.clientWidth);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: stageRef,
+    offset: ['start 88%', 'end 42%'],
+  });
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.6 });
+
+  // measure the path once per geometry: total length and where each node sits on it
+  useEffect(() => {
+    const path = curveRef.current;
+    if (!path || !geo) return;
+    const total = path.getTotalLength();
+    totalLen.current = total;
+    thresholds.current = geo.pts.map((p) => {
+      let lo = 0;
+      let hi = total;
+      for (let k = 0; k < 24; k++) {
+        const mid = (lo + hi) / 2;
+        if (path.getPointAtLength(mid).x < p.x) lo = mid;
+        else hi = mid;
+      }
+      return lo / total;
+    });
+    if (progressPathRef.current) {
+      progressPathRef.current.style.strokeDasharray = `${total}`;
+    }
+    apply(progress.get());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geo]);
+
+  const apply = useCallback(
+    (v: number) => {
+      const path = curveRef.current;
+      const total = totalLen.current;
+      if (!path || !total) return;
+      const f = Math.min(Math.max(v, 0), 1);
+      const pt = path.getPointAtLength(f * total);
+      if (progressPathRef.current) progressPathRef.current.style.strokeDashoffset = `${total * (1 - f)}`;
+      if (travelerRef.current) travelerRef.current.setAttribute('transform', `translate(${pt.x} ${pt.y})`);
+      if (clipRectRef.current) clipRectRef.current.setAttribute('width', `${pt.x}`);
+
+      const th = thresholds.current;
+      let count = 0;
+      for (let i = 0; i < th.length; i++) if (f >= th[i] - 0.004) count = i + 1;
+      setLit((prev) => (prev === count ? prev : count));
+      const idx = Math.max(0, count - 1);
+      if (idx !== lastScrollIdx.current) {
+        lastScrollIdx.current = idx;
+        setActive(idx);
+      }
+    },
+    []
+  );
+
+  useMotionValueEvent(progress, 'change', apply);
 
   return (
-    <section className="roadmap-journey-section" aria-labelledby="roadmap-title">
-      <div className="container">
-        {/* Section Header */}
-        <div className="section-head text-center">
-          <div className="section-eyebrow">
-            <span className="eyebrow-dot" aria-hidden="true"></span>
-            Your Financial Journey
-          </div>
-          <h2 id="roadmap-title" className="section-display-title">
-            Where Do You Want Your Financial <span className="highlight-text">Roadmap to Take You?</span>
-          </h2>
-          <p className="section-lead-text">
-            We&apos;ll work with you to explore the choices you may have already heard about and determine which ones fit your individual strategy.
-          </p>
-        </div>
-
-        {/* Step Selector Ribbon */}
-        <div className="roadmap-nav-ribbon" role="tablist" aria-label="Roadmap Stages">
-          {STEPS.map((step, idx) => (
-            <button
-              key={step.number}
-              type="button"
-              role="tab"
-              aria-selected={activeStepIndex === idx}
-              className={`roadmap-step-tab ${activeStepIndex === idx ? 'active' : ''}`}
-              onClick={() => setActiveStepIndex(idx)}
+    <div className="rm-desktop">
+      <div className="rm-stage" ref={stageRef} style={{ height: STAGE_H }}>
+        {geo && (
+          <>
+            <svg
+              className="rm-curve-svg"
+              width={geo.width}
+              height={STAGE_H}
+              viewBox={`0 0 ${geo.width} ${STAGE_H}`}
+              aria-hidden="true"
             >
-              <div className="tab-number-box">
-                <span className="tab-num">{step.number}</span>
-                {activeStepIndex === idx && <span className="active-pulse-ring" aria-hidden="true" />}
-              </div>
-              <div className="tab-meta">
-                <span className="tab-tag">{step.tag}</span>
-                <span className="tab-title">{step.title}</span>
-              </div>
-            </button>
-          ))}
-        </div>
+              <defs>
+                <linearGradient id="rm-gold-stroke" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0" stopColor="#d8b773" />
+                  <stop offset="1" stopColor="#b08c43" />
+                </linearGradient>
+                <linearGradient id="rm-gold-fill" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0" stopColor="#c5a059" stopOpacity="0.26" />
+                  <stop offset="1" stopColor="#c5a059" stopOpacity="0" />
+                </linearGradient>
+                <clipPath id="rm-reveal">
+                  <rect ref={clipRectRef} x="0" y="0" width="0" height={STAGE_H} />
+                </clipPath>
+              </defs>
 
-        {/* Active Stage Detailed Showcase Card */}
-        <div className="roadmap-showcase-card" role="tabpanel">
-          <div className="showcase-card-header">
-            <div className="header-badge-row">
-              <span className="stage-num-badge">Stage {activeStep.number}</span>
-              <span className="stage-duration-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                {activeStep.duration}
+              {/* chart gridlines */}
+              {[0.2, 0.4, 0.6, 0.8].map((g) => (
+                <line
+                  key={g}
+                  x1="0"
+                  x2={geo.width}
+                  y1={STAGE_H * g}
+                  y2={STAGE_H * g}
+                  className="rm-gridline"
+                />
+              ))}
+
+              {/* fill beneath the curve, revealed up to the traveller */}
+              <path
+                d={`${geo.d} L ${geo.width} ${STAGE_H} L 0 ${STAGE_H} Z`}
+                fill="url(#rm-gold-fill)"
+                clipPath="url(#rm-reveal)"
+              />
+
+              {/* plumb lines from each milestone down to its text */}
+              {geo.pts.map((p, i) => (
+                <line
+                  key={i}
+                  x1={p.x}
+                  x2={p.x}
+                  y1={p.y + 22}
+                  y2={STAGE_H}
+                  className={`rm-plumb ${lit > i ? 'is-lit' : ''}`}
+                />
+              ))}
+
+              {/* base hairline curve + gold progress curve */}
+              <path ref={curveRef} d={geo.d} className="rm-curve-base" />
+              <path ref={progressPathRef} d={geo.d} className="rm-curve-progress" />
+
+              {/* traveller */}
+              <g ref={travelerRef}>
+                <circle r="16" className="rm-traveler-halo" />
+                <circle r="5" className="rm-traveler-core" />
+              </g>
+            </svg>
+
+            {geo.pts.map((p, i) => {
+              const isLit = lit > i;
+              const isActive = active === i;
+              return (
+                <button
+                  key={STEPS[i].number}
+                  type="button"
+                  className={`rm-node ${isLit ? 'is-lit' : ''} ${isActive ? 'is-active' : ''}`}
+                  style={{ left: p.x, top: p.y }}
+                  onClick={() => setActive(i)}
+                  aria-label={`Stage ${STEPS[i].number}: ${STEPS[i].title}`}
+                  aria-pressed={isActive}
+                >
+                  <span className="rm-node-ring" aria-hidden="true" />
+                  <span className="rm-node-core">
+                    <CheckMark drawn={isLit} />
+                  </span>
+                </button>
+              );
+            })}
+          </>
+        )}
+      </div>
+
+      {/* step labels */}
+      <ol className="rm-columns">
+        {STEPS.map((step, i) => (
+          <motion.li
+            key={step.number}
+            className={`rm-col ${active === i ? 'is-active' : ''} ${lit > i ? 'is-lit' : ''}`}
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.8, delay: i * 0.12, ease: EASE }}
+          >
+            <button type="button" className="rm-col-btn" onClick={() => setActive(i)}>
+              <span className="rm-ghost-num" aria-hidden="true">
+                {step.number}
               </span>
-            </div>
-            <h3 className="stage-card-title">{activeStep.title}</h3>
-            <p className="stage-card-summary">{activeStep.summary}</p>
-          </div>
+              <span className="rm-col-duration">{step.duration}</span>
+              <span className="rm-col-title">{step.title}</span>
+              <span className="rm-col-tag">{step.tag}</span>
+            </button>
+          </motion.li>
+        ))}
+      </ol>
 
-          <div className="showcase-content-grid">
-            <div className="showcase-deliverables">
-              <h4 className="deliverables-title">Advisor Milestones &amp; Actions:</h4>
-              <ul className="stage-deliverables-list">
-                {activeStep.deliverables.map((item, dIdx) => (
-                  <li key={dIdx} className="stage-deliverable-item">
-                    <span className="bullet-cyan">✓</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <RoadmapCta onOpenBooking={onOpenBooking} />
+    </div>
+  );
+}
 
-            <div className="showcase-outcome-pane">
-              <div className="outcome-box">
-                <div className="outcome-icon cyan">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                  </svg>
-                </div>
-                <div className="outcome-text-content">
-                  <span className="outcome-label">The Deliverable to Your Family:</span>
-                  <p className="outcome-quote">{activeStep.clientOutcome}</p>
-                </div>
-              </div>
+/* -------------------------------------------------------------------------
+   Mobile: vertical rail that fills with gold as you scroll
+   ------------------------------------------------------------------------- */
 
-              <div className="stage-action-trigger">
-                {onOpenBooking ? (
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-md btn-full"
-                    onClick={onOpenBooking}
-                  >
-                    Start Step 1: Complimentary Discovery
-                  </button>
-                ) : (
-                  <a
-                    href="https://calendly.com/securevestsolutions/appointment"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-md btn-full"
-                  >
-                    Start Step 1: Complimentary Discovery
-                  </a>
-                )}
-                <span className="action-subtext">No obligations • 100% confidential discussion</span>
-              </div>
-            </div>
-          </div>
-        </div>
+function MobileRoadmap({ onOpenBooking }: RoadmapJourneyProps) {
+  const listRef = useRef<HTMLOListElement>(null);
+  const [lit, setLit] = useState(0);
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ['start 70%', 'end 60%'] });
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.6 });
+  const fill = useTransform(progress, [0, 1], [0, 1]);
+
+  useMotionValueEvent(progress, 'change', (v) => {
+    const count = Math.min(STEPS.length, Math.floor(v * STEPS.length + 0.35) + (v > 0.02 ? 1 : 0));
+    setLit((prev) => (prev === count ? prev : count));
+  });
+
+  return (
+    <div className="rm-mobile">
+      <ol className="rm-vlist" ref={listRef}>
+        <span className="rm-vrail" aria-hidden="true">
+          <motion.span className="rm-vrail-fill" style={{ scaleY: fill }} />
+        </span>
+        {STEPS.map((step, i) => (
+          <motion.li
+            key={step.number}
+            className={`rm-vitem ${lit > i ? 'is-lit' : ''}`}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            <span className="rm-vnode" aria-hidden="true">
+              <CheckMark drawn={lit > i} />
+            </span>
+            <span className="rm-col-duration">
+              {step.number} · {step.duration}
+            </span>
+            <h3 className="rm-vtitle">{step.title}</h3>
+            <span className="rm-col-tag">{step.tag}</span>
+          </motion.li>
+        ))}
+      </ol>
+      <div className="rm-mobile-cta">
+        <RoadmapCta onOpenBooking={onOpenBooking} />
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------
+   Section
+   ------------------------------------------------------------------------- */
+
+const DUST = Array.from({ length: 14 }, (_, i) => ({
+  left: `${(i * 37 + 11) % 100}%`,
+  size: 2 + ((i * 5) % 4),
+  delay: `${-((i * 1.7) % 14)}s`,
+  duration: `${14 + ((i * 3) % 9)}s`,
+}));
+
+export default function RoadmapJourney({ onOpenBooking }: RoadmapJourneyProps) {
+  const titleWords = 'Where Do You Want Your Financial'.split(' ');
+  const goldWords = 'Roadmap to Take You?'.split(' ');
+
+  return (
+    <section className="rm-section" aria-labelledby="roadmap-title">
+      <div className="rm-dust" aria-hidden="true">
+        {DUST.map((d, i) => (
+          <span
+            key={i}
+            style={{
+              left: d.left,
+              width: d.size,
+              height: d.size,
+              animationDelay: d.delay,
+              animationDuration: d.duration,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container rm-container">
+        <header className="rm-header">
+          <motion.div
+            className="rm-eyebrow"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            <span className="rm-eyebrow-rule" aria-hidden="true" />
+            Your Financial Journey
+            <span className="rm-eyebrow-rule" aria-hidden="true" />
+          </motion.div>
+
+          <h2 id="roadmap-title" className="rm-title">
+            {titleWords.map((w, i) => (
+              <span className="rm-word-mask" key={`a${i}`}>
+                <motion.span
+                  className="rm-word"
+                  initial={{ y: '110%' }}
+                  whileInView={{ y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.9, delay: 0.1 + i * 0.07, ease: EASE }}
+                >
+                  {w}&nbsp;
+                </motion.span>
+              </span>
+            ))}
+            <br className="rm-title-break" />
+            {goldWords.map((w, i) => (
+              <span className="rm-word-mask" key={`b${i}`}>
+                <motion.span
+                  className="rm-word rm-word-gold"
+                  initial={{ y: '110%' }}
+                  whileInView={{ y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.9, delay: 0.1 + (titleWords.length + i) * 0.07, ease: EASE }}
+                >
+                  {w}
+                  {i < goldWords.length - 1 ? ' ' : ''}
+                </motion.span>
+              </span>
+            ))}
+          </h2>
+
+          <motion.p
+            className="rm-lead"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.7, ease: EASE }}
+          >
+            We&apos;ll work with you to explore the choices you may have already heard about and determine which ones fit your individual strategy.
+          </motion.p>
+        </header>
+
+        <DesktopRoadmap onOpenBooking={onOpenBooking} />
+        <MobileRoadmap onOpenBooking={onOpenBooking} />
       </div>
     </section>
   );

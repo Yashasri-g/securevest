@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import ThemeButton from '@/components/ThemeButton';
 
 export const metadata: Metadata = {
   title: 'What Is a Good Monthly Retirement Income?',
@@ -135,14 +136,14 @@ export default function ArticleRetirementIncome() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
-          <a
+          <ThemeButton
             href="https://calendly.com/securevestsolutions/appointment"
             target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-accent btn-lg"
+            variant="gold"
+            size="lg"
           >
             Schedule a Free Retirement Review
-          </a>
+          </ThemeButton>
         </div>
       </div>
     </article>

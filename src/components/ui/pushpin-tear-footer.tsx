@@ -196,6 +196,7 @@ export type PushpinTearFooterProps = {
   logo?: React.ReactNode
   logoHref?: string
   socials?: IconLink[]
+  customSocials?: React.ReactNode
   /** Copied by the envelope button; also the default "talk." link. */
   email?: string
   newsletter?: { label: string; placeholder?: string } | null
@@ -572,6 +573,7 @@ export default function PushpinTearFooter({
   logo,
   logoHref = HOME,
   socials = DEFAULT_SOCIALS,
+  customSocials,
   email = "hello@example.com",
   newsletter = { label: "new components, once a month", placeholder: "your@email" },
   status = { label: "open for collaborations" },
@@ -944,11 +946,15 @@ export default function PushpinTearFooter({
             <Icon name="chevL" />
           </button>
           <span style={{ width: ".6em" }} />
-          {socials.map((l, i) => (
-            <A key={i} href={l.href} className="tpf-ib" label={l.label}>
-              <Icon name={l.icon} />
-            </A>
-          ))}
+          {customSocials ? (
+            customSocials
+          ) : (
+            socials.map((l, i) => (
+              <A key={i} href={l.href} className="tpf-ib" label={l.label}>
+                <Icon name={l.icon} />
+              </A>
+            ))
+          )}
         </div>
         <A href={logoHref} className="tpf-logo tpf-h" label={name + ", home"} style={H(1)}>
           {logo ?? <KMark />}

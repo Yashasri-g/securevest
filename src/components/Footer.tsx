@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PushpinTearFooter from '@/components/ui/pushpin-tear-footer';
+import SocialMorphButton from '@/components/SocialMorphButton';
 
 export default function Footer() {
   return (
@@ -39,11 +40,7 @@ export default function Footer() {
           label: "accepting household & business advisory clients",
           href: "/contact",
         }}
-        socials={[
-          { icon: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com" },
-          { icon: "x", label: "X", href: "https://x.com" },
-          { icon: "globe", label: "SecureVest Web", href: "https://securevestsolutions.com" },
-        ]}
+        customSocials={<SocialMorphButton label="Socials" theme="dark" />}
         columns={[
           {
             title: "services",

@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import ThemeButton from '@/components/ThemeButton';
 
 export const metadata: Metadata = {
   title: 'High Costs, Uncertain Markets: How to Financially Protect Your Family in 2026',
@@ -93,14 +94,14 @@ export default function ArticleHighCosts2026() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
-          <a
+          <ThemeButton
             href="https://calendly.com/securevestsolutions/appointment"
             target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-accent btn-lg"
+            variant="gold"
+            size="lg"
           >
             Schedule a 2026 Financial Review
-          </a>
+          </ThemeButton>
         </div>
       </div>
     </article>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import ThemeButton from '@/components/ThemeButton';
 
 export const metadata: Metadata = {
   title: 'Why Term Insurance is a Must-Have for Every Family',
@@ -128,14 +129,14 @@ export default function ArticleTermInsurance() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
-          <a
+          <ThemeButton
             href="https://calendly.com/securevestsolutions/appointment"
             target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-accent btn-lg"
+            variant="gold"
+            size="lg"
           >
             Get a Personalized Term Insurance Quote
-          </a>
+          </ThemeButton>
         </div>
       </div>
     </article>

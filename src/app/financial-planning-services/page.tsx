@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import ThemeButton from '@/components/ThemeButton';
 
 export const metadata: Metadata = {
   title: 'Financial Planning & Insurance Services',
@@ -21,17 +22,21 @@ export default function ServicesPage() {
             Comprehensive planning for families and businesses to protect assets, preserve wealth, and maximize tax benefits through every stage of life.
           </p>
           <div className="page-hero-actions">
-            <a
+            <ThemeButton
               href="https://calendly.com/securevestsolutions/appointment"
               target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-accent btn-lg"
+              variant="gold"
+              size="lg"
             >
               Schedule Free Consultation
-            </a>
-            <Link href="/contact" className="btn btn-outline-light btn-lg">
+            </ThemeButton>
+            <ThemeButton
+              href="/contact"
+              variant="outline-light"
+              size="lg"
+            >
               Request Information
-            </Link>
+            </ThemeButton>
           </div>
         </div>
       </section>
@@ -346,17 +351,21 @@ export default function ServicesPage() {
                 Book an appointment with our team today. We'll listen to your priorities and outline clear recommendations at zero cost or obligation.
               </p>
               <div className="cta-banner-actions">
-                <a
+                <ThemeButton
                   href="https://calendly.com/securevestsolutions/appointment"
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-accent btn-lg"
+                  variant="gold"
+                  size="lg"
                 >
                   Book An Appointment
-                </a>
-                <a href="tel:7403032525" className="btn btn-outline-white btn-lg">
+                </ThemeButton>
+                <ThemeButton
+                  href="tel:7403032525"
+                  variant="outline-light"
+                  size="lg"
+                >
                   Call (740) 303-2525
-                </a>
+                </ThemeButton>
               </div>
             </div>
           </div>

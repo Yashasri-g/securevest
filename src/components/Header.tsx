@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import ThemeButton from './ThemeButton';
 
 interface HeaderProps {
   onOpenBooking: () => void;
@@ -106,13 +107,13 @@ export default function Header({ onOpenBooking }: HeaderProps) {
                 <span>(740) 303-2525</span>
               </a>
 
-              <button
-                type="button"
-                className="aceternity-cta-button"
+              <ThemeButton
+                variant="gold"
+                size="sm"
                 onClick={onOpenBooking}
               >
                 Book Appointment
-              </button>
+              </ThemeButton>
             </div>
           </motion.header>
         </div>
@@ -184,16 +185,17 @@ export default function Header({ onOpenBooking }: HeaderProps) {
                   </div>
 
                   <div className="aceternity-mobile-actions">
-                    <button
-                      type="button"
-                      className="aceternity-cta-button aceternity-cta-mobile"
+                    <ThemeButton
+                      variant="gold"
+                      size="md"
+                      fullWidth
                       onClick={() => {
                         setIsMobileOpen(false);
                         onOpenBooking();
                       }}
                     >
                       Book Appointment
-                    </button>
+                    </ThemeButton>
 
                     <a
                       href="tel:7403032525"

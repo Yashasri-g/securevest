@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import FaqAccordion from '@/components/FaqAccordion';
+import ThemeButton from '@/components/ThemeButton';
 
 export const metadata: Metadata = {
   title: 'Understanding Wills and Trusts: What You Need to Know',
@@ -226,14 +227,14 @@ export default function ArticleWillsTrusts() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
-          <a
+          <ThemeButton
             href="https://calendly.com/securevestsolutions/appointment"
             target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-accent btn-lg"
+            variant="gold"
+            size="lg"
           >
             Schedule a Free Living Will &amp; Trust Consultation
-          </a>
+          </ThemeButton>
         </div>
       </div>
     </article>
