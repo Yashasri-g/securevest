@@ -48,3 +48,49 @@ export function ArticleJsonLd({ slug }: { slug: string }) {
     </>
   );
 }
+
+/** Reusable breadcrumb structured data component */
+export function BreadcrumbJsonLd({
+  items,
+}: {
+  items: { name: string; url: string }[];
+}) {
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: items.map((it, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: it.name,
+          item: it.url,
+        })),
+      }}
+    />
+  );
+}
+
+/** FAQPage structured data for Answer Engine Optimization (AEO) & search snippets */
+export function FaqJsonLd({
+  faqs,
+}: {
+  faqs: { question: string; answer: string }[];
+}) {
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.question.replace(/^\d+[\.\)]\s*/, ''),
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: f.answer,
+          },
+        })),
+      }}
+    />
+  );
+}

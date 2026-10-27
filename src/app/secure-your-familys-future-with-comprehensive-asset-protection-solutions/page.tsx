@@ -36,8 +36,8 @@ export default function ArticleComprehensiveAssetProtection() {
 
       <div className="article-hero-image">
         <img
-          src="/images/broken-phone-insurance.jpg"
-          alt="Smartphone with cracked screen displaying INSURANCE on display"
+          src="/images/blogs/blog-asset-protection.jpg"
+          alt="Executive private wealth sanctuary and institutional bank vault interior with warm ambient illumination"
           width={980}
           height={480}
         />

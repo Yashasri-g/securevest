@@ -35,7 +35,19 @@ export const metadata: Metadata = {
   },
   // Pages set their own canonical, Open Graph and Twitter cards via pageMetadata().
   openGraph: { type: 'website', locale: 'en_US', siteName: SITE_NAME },
-  icons: { icon: '/images/logo.png', apple: '/images/logo.png' },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
+      { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
 };
 
 export const viewport: Viewport = {
@@ -56,6 +68,23 @@ const ORGANIZATION_JSON_LD = {
       image: `${SITE_URL}${DEFAULT_OG_IMAGE}`,
       telephone: SITE_PHONE,
       email: SITE_EMAIL,
+      priceRange: '$$',
+      currenciesAccepted: 'USD',
+      paymentAccepted: 'Cash, Credit Card, Bank Transfer',
+      areaServed: {
+        '@type': 'Country',
+        name: 'United States',
+      },
+      knowsAbout: [
+        'Wealth Management',
+        'Fiduciary Wealth Advisory',
+        'Term Life Insurance',
+        'Asset Protection',
+        'Estate Planning',
+        'Living Trusts',
+        'Retirement Income Planning',
+        'Tax-Advantaged Strategies',
+      ],
       openingHours: 'Mo-Fr 09:00-17:00',
       description:
         'Comprehensive financial solutions for family asset security, term life insurance, retirement planning, and tax optimization.',

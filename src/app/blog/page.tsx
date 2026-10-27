@@ -1,8 +1,9 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/site';
+import { pageMetadata, SITE_URL } from '@/lib/site';
 import { BLOG_POSTS } from '@/data/blogPosts';
 import JournalHub from '@/components/JournalHub';
+import { BreadcrumbJsonLd } from '@/components/JsonLd';
 
 export const metadata: Metadata = pageMetadata({
   title: 'The SecureVest Wealth Journal & Fiduciary Insights',
@@ -12,5 +13,15 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function BlogHubPage() {
-  return <JournalHub posts={BLOG_POSTS} />;
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Home', url: SITE_URL },
+          { name: 'Blog', url: `${SITE_URL}/blog` },
+        ]}
+      />
+      <JournalHub posts={BLOG_POSTS} />
+    </>
+  );
 }

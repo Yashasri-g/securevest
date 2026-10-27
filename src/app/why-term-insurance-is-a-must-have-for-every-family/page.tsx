@@ -36,8 +36,8 @@ export default function ArticleTermInsurance() {
 
       <div className="article-hero-image">
         <img
-          src="/images/term-insurance.jpg"
-          alt="Term life insurance policy document review"
+          src="/images/blogs/blog-term-insurance.jpg"
+          alt="Parents happily embracing children in sun-drenched golden grass field at sunset"
           width={980}
           height={480}
         />

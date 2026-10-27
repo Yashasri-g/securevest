@@ -21,8 +21,8 @@ export const BLOG_POSTS: BlogPost[] = [
     categoryLabel: 'Market Insights',
     excerpt:
       'As we step into 2026, many families are feeling the pressure. Everyday expenses remain high, interest rates fluctuate, and market uncertainty continues to make financial planning feel overwhelming. Protecting your family’s financial future is about building a strong, resilient foundation.',
-    image: '/images/market-family.png',
-    imageAlt: 'Family standing together viewing economic trends and city skyline',
+    image: '/images/blogs/blog-market-resilience.jpg',
+    imageAlt: 'Family standing together in sunlit home with panoramic windows representing economic resilience',
     tags: ['Market Resilience', 'Income Protection'],
   },
   {
@@ -34,8 +34,8 @@ export const BLOG_POSTS: BlogPost[] = [
     categoryLabel: 'Retirement Planning',
     excerpt:
       'Planning for retirement isn’t just about saving—it’s about knowing how much income you’ll need each month to live comfortably. Explore benchmarks, the 4% rule, and how to create a personalized monthly budget.',
-    image: '/images/retirement-laptop.png',
-    imageAlt: 'Senior couple smiling and reviewing their retirement roadmap on a laptop',
+    image: '/images/blogs/blog-retirement-income.jpg',
+    imageAlt: 'Retired couple smiling enjoying morning coffee on an open terrace with scenic rolling hills',
     tags: ['Retirement Planning', 'Cash Flow'],
   },
   {
@@ -47,8 +47,8 @@ export const BLOG_POSTS: BlogPost[] = [
     categoryLabel: 'Estate Planning',
     excerpt:
       'Why having a Living Will and Trust protects your medical choices, shields your home and savings, avoids probate court, and secures your loved ones. Includes 20 answers to top client questions.',
-    image: '/images/wills-book.jpg',
-    imageAlt: 'Novum Testamentum Graece leather volume representing estate and trust heritage',
+    image: '/images/blogs/blog-wills-trusts.jpg',
+    imageAlt: 'Estate planning living trust documents and fountain pen on executive library desk',
     tags: ['Estate Planning', 'Living Trusts'],
   },
   {
@@ -60,8 +60,8 @@ export const BLOG_POSTS: BlogPost[] = [
     categoryLabel: 'Life Insurance',
     excerpt:
       'Term insurance is a type of life insurance that provides coverage for a specific period or "term," often between 10 and 30 years. Discover why affordable term coverage is essential to replace income and protect your family.',
-    image: '/images/term-insurance.jpg',
-    imageAlt: 'Red ambulance directional sign symbolizing emergency financial protection',
+    image: '/images/blogs/blog-term-insurance.jpg',
+    imageAlt: 'Parents happily embracing children in sun-drenched golden grass field at sunset',
     tags: ['Life Insurance', 'Family Security'],
   },
   {
@@ -73,8 +73,8 @@ export const BLOG_POSTS: BlogPost[] = [
     categoryLabel: 'Asset Protection',
     excerpt:
       'At SecureVest Solutions, we specialize in helping families safeguard their assets through tailored insurance and investment strategies. Our services include retirement planning, educational planning, and tax-saving solutions, ensuring your family\'s financial security and peace of mind for the future. Discover how we can assist you today.',
-    image: '/images/broken-phone-insurance.jpg',
-    imageAlt: 'Smartphone with cracked screen displaying INSURANCE word on display',
+    image: '/images/blogs/blog-asset-protection.jpg',
+    imageAlt: 'Executive private wealth sanctuary and institutional bank vault interior with warm ambient illumination',
     tags: ['Asset Protection', 'Wealth Preservation'],
   },
   {
@@ -86,8 +86,8 @@ export const BLOG_POSTS: BlogPost[] = [
     categoryLabel: 'Financial Planning',
     excerpt:
       'At SecureVest Solutions, we specialize in asset protection, insurance, and tax-saving strategies. Our comprehensive services include goal setting, retirement planning, educational funding, risk management, and estate planning to ensure your family\'s financial security and peace of mind for the future. Let us help you achieve your financial goals.',
-    image: '/images/advisor-desk.jpg',
-    imageAlt: 'Financial advisor on phone reviewing desktop financial planning charts',
+    image: '/images/blogs/blog-smart-planning.jpg',
+    imageAlt: 'Financial advisor presenting customized financial roadmap to couple in modern executive conference room',
     tags: ['Financial Planning', 'Goal Setting'],
   },
 ];

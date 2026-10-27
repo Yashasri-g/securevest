@@ -2,8 +2,8 @@ import React from 'react';
 import type { Metadata } from 'next';
 import ThemeButton from '@/components/ThemeButton';
 import Reveal from '@/components/Reveal';
-import JsonLd from '@/components/JsonLd';
-import { pageMetadata, absoluteUrl } from '@/lib/site';
+import JsonLd, { BreadcrumbJsonLd } from '@/components/JsonLd';
+import { pageMetadata, absoluteUrl, SITE_URL } from '@/lib/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Financial Planning & Insurance Services',
@@ -91,6 +91,12 @@ export default function ServicesPage() {
             },
           })),
         }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Home', url: SITE_URL },
+          { name: 'Financial Planning Services', url: `${SITE_URL}/financial-planning-services` },
+        ]}
       />
       {/* Hero / Header */}
       <section className="page-hero-banner" aria-label="Services Overview">

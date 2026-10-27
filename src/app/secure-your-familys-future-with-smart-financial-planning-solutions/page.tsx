@@ -36,8 +36,8 @@ export default function ArticleSmartFinancialPlanning() {
 
       <div className="article-hero-image">
         <img
-          src="/images/advisor-desk.jpg"
-          alt="Financial advisor on phone reviewing desktop financial planning charts"
+          src="/images/blogs/blog-smart-planning.jpg"
+          alt="Financial advisor presenting customized financial roadmap to couple in modern executive conference room"
           width={980}
           height={480}
         />

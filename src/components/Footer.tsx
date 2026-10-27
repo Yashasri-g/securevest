@@ -12,17 +12,25 @@ export default function Footer() {
         name="fiduciary wealth & protection"
         logoHref="/"
         logo={
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
             <img
-              src="/images/logo.png"
+              src="/images/logo-icon.png"
               alt="SecureVest Solutions"
               style={{
-                filter: 'brightness(0) invert(1)',
-                height: '28px',
-                width: 'auto',
+                height: '46px',
+                width: '46px',
                 display: 'block',
+                objectFit: 'contain',
               }}
             />
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.35rem', letterSpacing: '0.06em', color: '#ffffff' }}>
+                SECUREVEST
+              </span>
+              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.24em', color: 'var(--color-accent-400)', marginTop: '3px' }}>
+                SOLUTIONS
+              </span>
+            </div>
           </div>
         }
         sheet="#080f1e"

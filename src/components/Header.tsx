@@ -56,12 +56,16 @@ export default function Header({ onOpenBooking }: HeaderProps) {
             {/* Brand Logo */}
             <Link href="/" className="aceternity-brand-link" aria-label="SecureVest Solutions Homepage">
               <img
-                src="/images/logo.png"
-                alt="SecureVest Solutions - Plan Today ! Protect Tomorrow !"
+                src="/images/logo-icon.png"
+                alt="SecureVest Solutions Emblem"
                 className="brand-logo-img"
-                width={190}
-                height={32}
+                width={48}
+                height={48}
               />
+              <span className="brand-logo-text">
+                <span className="brand-logo-name">SECUREVEST</span>
+                <span className="brand-logo-tag">SOLUTIONS</span>
+              </span>
             </Link>
 
             {/* Centered Navigation Links with Sliding Background Pill on Hover */}
@@ -130,12 +134,16 @@ export default function Header({ onOpenBooking }: HeaderProps) {
             <div className="aceternity-mobile-bar">
               <Link href="/" className="aceternity-brand-link" onClick={() => setIsMobileOpen(false)} aria-label="SecureVest Solutions Homepage">
                 <img
-                  src="/images/logo.png"
-                  alt="SecureVest Solutions"
+                  src="/images/logo-icon.png"
+                  alt="SecureVest Solutions Emblem"
                   className="brand-logo-img"
-                  width={150}
-                  height={26}
+                  width={38}
+                  height={38}
                 />
+                <span className="brand-logo-text">
+                  <span className="brand-logo-name">SECUREVEST</span>
+                  <span className="brand-logo-tag">SOLUTIONS</span>
+                </span>
               </Link>
 
               <button

@@ -67,7 +67,8 @@ export async function POST(request: Request) {
   // Forward to your CRM / Zapier / Slack / Sheets webhook when configured.
   const hook = process.env.LEAD_WEBHOOK_URL;
   if (!hook) {
-    console.log('[leads] new lead (set LEAD_WEBHOOK_URL to forward)', lead);
+    // Avoid logging sensitive PII (email, phone, cleartext message) to stdout
+    console.info(`[leads] inquiry accepted: source="${lead.source}" interest="${lead.interest}" (LEAD_WEBHOOK_URL not configured)`);
     return NextResponse.json({ ok: true });
   }
 
@@ -81,7 +82,7 @@ export async function POST(request: Request) {
     if (!res.ok) throw new Error(`Webhook responded ${res.status}`);
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error('[leads] webhook failed', err);
+    console.error('[leads] webhook delivery failed:', err instanceof Error ? err.message : 'network error');
     return NextResponse.json({ ok: false, error: 'Could not save right now' }, { status: 502 });
   }
 }

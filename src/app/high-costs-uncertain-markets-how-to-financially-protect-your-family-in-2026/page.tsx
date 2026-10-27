@@ -36,8 +36,8 @@ export default function ArticleHighCosts2026() {
 
       <div className="article-hero-image">
         <img
-          src="/images/market-family.png"
-          alt="Family viewing market volatility and economic horizon"
+          src="/images/blogs/blog-market-resilience.jpg"
+          alt="Family standing together in sunlit home with panoramic windows representing economic resilience"
           width={980}
           height={480}
         />

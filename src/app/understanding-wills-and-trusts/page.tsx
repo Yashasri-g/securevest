@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { postMetadata } from '@/lib/site';
-import { ArticleJsonLd } from '@/components/JsonLd';
+import { ArticleJsonLd, FaqJsonLd } from '@/components/JsonLd';
 import FaqAccordion from '@/components/FaqAccordion';
 import ThemeButton from '@/components/ThemeButton';
 
@@ -99,6 +99,7 @@ export default function ArticleWillsTrusts() {
   return (
     <article className="container" style={{ paddingBottom: '5rem' }}>
       <ArticleJsonLd slug="understanding-wills-and-trusts" />
+      <FaqJsonLd faqs={trustFaqs} />
       <header className="article-header">
         <ul className="breadcrumbs" style={{ justifyContent: 'center' }}>
           <li><Link href="/">Home</Link></li>
@@ -120,8 +121,8 @@ export default function ArticleWillsTrusts() {
 
       <div className="article-hero-image">
         <img
-          src="/images/trust-legal.jpg"
-          alt="Estate planning living will and trust arrangement"
+          src="/images/blogs/blog-wills-trusts.jpg"
+          alt="Estate planning living trust documents and fountain pen on executive library desk"
           width={980}
           height={480}
         />

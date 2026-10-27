@@ -5797,7 +5797,7 @@ li {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.05);
-  padding: 0.45rem 0.75rem 0.45rem 1.25rem;
+  padding: 0.55rem 0.85rem 0.55rem 1.35rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -5810,18 +5810,51 @@ li {
 .aceternity-brand-link {
   display: flex;
   align-items: center;
+  gap: 0.85rem;
   position: relative;
   z-index: 20;
-  margin-right: 1.5rem;
+  margin-right: 1.75rem;
   text-decoration: none;
   flex-shrink: 0;
 }
 
-.aceternity-brand-link img {
+.aceternity-brand-link img,
+.aceternity-brand-link .brand-logo-img {
   display: block;
-  height: 32px;
-  width: auto;
+  height: 48px;
+  width: 48px;
   object-fit: contain;
+  filter: drop-shadow(0 3px 12px rgba(0, 180, 216, 0.45));
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aceternity-brand-link:hover .brand-logo-img {
+  transform: scale(1.08) rotate(-2deg);
+}
+
+.brand-logo-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1;
+}
+
+.brand-logo-name {
+  font-family: var(--font-display);
+  font-size: 1.42rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  transition: color 0.2s ease;
+}
+
+.brand-logo-tag {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--color-accent-400, #00b4d8);
+  margin-top: 3px;
 }
 
 /* Centered Navigation Links with Sliding Background Pill on Hover */
@@ -6073,6 +6106,55 @@ li {
 .aceternity-mobile-call-btn:hover {
   border-color: var(--color-gold-500, #c5a059);
   color: var(--color-gold-500, #c5a059);
+}
+
+@media (max-width: 1023px) {
+  .aceternity-brand-link img,
+  .aceternity-brand-link .brand-logo-img {
+    height: 40px;
+    width: 40px;
+  }
+  .brand-logo-name {
+    font-size: 1.25rem;
+  }
+  .brand-logo-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+  }
+}
+
+@media (max-width: 640px) {
+  .aceternity-brand-link {
+    gap: 0.65rem;
+    margin-right: 0.75rem;
+  }
+  .aceternity-brand-link img,
+  .aceternity-brand-link .brand-logo-img {
+    height: 36px;
+    width: 36px;
+  }
+  .brand-logo-name {
+    font-size: 1.15rem;
+  }
+  .brand-logo-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+  }
+}
+
+@media (max-width: 380px) {
+  .aceternity-brand-link img,
+  .aceternity-brand-link .brand-logo-img {
+    height: 30px;
+    width: 30px;
+  }
+  .brand-logo-name {
+    font-size: 0.98rem;
+  }
+  .brand-logo-tag {
+    font-size: 0.52rem;
+    letter-spacing: 0.16em;
+  }
 }
 
 
