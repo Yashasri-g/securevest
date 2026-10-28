@@ -9,6 +9,7 @@ import ThemeButton from '@/components/ThemeButton';
 import PillarsCanvasCards from '@/components/PillarsCanvasCards';
 import PillarsBackdrop from '@/components/PillarsBackdrop';
 import CallingAdvisorStage from '@/components/CallingAdvisorStage';
+import FinancialEstimator from '@/components/FinancialEstimator';
 import { BLOG_POSTS } from '@/data/blogPosts';
 import { pageMetadata } from '@/lib/site';
 
@@ -56,22 +57,40 @@ export default function HomePage() {
       </section>
 
       {/* =========================================================================
-          SCENE 3: 6 CORE FINANCIAL PILLARS (INTERACTIVE SERVICES HUB)
+          SCENE 3: INTERACTIVE STRATEGY COCKPIT (FINANCIAL ESTIMATOR)
+          ========================================================================= */}
+      <section className="estimator-section" id="estimator" aria-labelledby="estimator-title">
+        <div className="container">
+          <div className="section-head text-center">
+            <h2 id="estimator-title" className="section-display-title">
+              Retirement &amp; Family Protection <span className="highlight-text">Estimator</span>
+            </h2>
+            <p className="section-lead-text">
+              Test different scenarios to estimate the exact term life coverage and retirement nest egg required to keep your household secure.
+            </p>
+          </div>
+
+          <FinancialEstimator />
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SCENE 4: 6 CORE FINANCIAL PILLARS (INTERACTIVE SERVICES HUB)
           ========================================================================= */}
       <ServicesInteractiveSection />
 
       {/* =========================================================================
-          SCENE 4: 4-STEP FAMILY WEALTH ROADMAP
+          SCENE 5: 4-STEP FAMILY WEALTH ROADMAP
           ========================================================================= */}
       <RoadmapJourney />
 
       {/* =========================================================================
-          SCENE 5: VERIFIED CLIENT TESTIMONIALS LEDGER
+          SCENE 6: VERIFIED CLIENT TESTIMONIALS LEDGER
           ========================================================================= */}
       <TestimonialsLedger />
 
       {/* =========================================================================
-          SCENE 6: LATEST FINANCIAL EDUCATION & INSIGHTS
+          SCENE 7: LATEST FINANCIAL EDUCATION & INSIGHTS
           ========================================================================= */}
       <section className="home-insights-section" aria-labelledby="insights-title">
         <div className="container">
@@ -91,7 +110,7 @@ export default function HomePage() {
       </section>
 
       {/* =========================================================================
-          SCENE 7: THE SOVEREIGN FINAL CTA BANNER
+          SCENE 8: THE SOVEREIGN FINAL CTA BANNER
           ========================================================================= */}
       <section className="sovereign-cta-section" aria-labelledby="cta-banner-title">
         <div className="cta-ambient-glow" aria-hidden="true" />
