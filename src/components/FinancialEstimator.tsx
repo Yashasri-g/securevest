@@ -40,6 +40,19 @@ const PRESETS: ScenarioPreset[] = [
   },
 ];
 
+/** Tick labels placed on the range thumb's travel path (19px thumb), so each sits under its real value. */
+function SliderTicks({ min, max, ticks }: { min: number; max: number; ticks: { value: number; label: string }[] }) {
+  return (
+    <div className="slider-scale slider-scale-ticks" aria-hidden="true">
+      {ticks.map((t) => (
+        <span key={t.value} style={{ left: `calc(9.5px + (100% - 19px) * ${(t.value - min) / (max - min)})` }}>
+          {t.label}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export default function FinancialEstimator({ onOpenBooking }: FinancialEstimatorProps) {
   const bookingModal = useBookingModal();
   const handleBooking = onOpenBooking || bookingModal?.openBooking;
@@ -141,12 +154,7 @@ export default function FinancialEstimator({ onOpenBooking }: FinancialEstimator
                 }}
                 aria-label="Current Age"
               />
-              <div className="slider-scale">
-                <span>Age 20</span>
-                <span>Age 35</span>
-                <span>Age 50</span>
-                <span>Age 65</span>
-              </div>
+              <SliderTicks min={20} max={65} ticks={[{ value: 20, label: '20' }, { value: 35, label: '35' }, { value: 50, label: '50' }, { value: 65, label: '65' }]} />
             </div>
 
             {/* Slider 2: Desired Retirement Age */}
@@ -172,12 +180,7 @@ export default function FinancialEstimator({ onOpenBooking }: FinancialEstimator
                 }}
                 aria-label="Desired Retirement Age"
               />
-              <div className="slider-scale">
-                <span>Age 50</span>
-                <span>Age 60</span>
-                <span>Age 65</span>
-                <span>Age 75</span>
-              </div>
+              <SliderTicks min={50} max={75} ticks={[{ value: 50, label: '50' }, { value: 60, label: '60' }, { value: 65, label: '65' }, { value: 75, label: '75' }]} />
             </div>
 
             {/* Slider 3: Monthly Expenses */}
@@ -202,12 +205,7 @@ export default function FinancialEstimator({ onOpenBooking }: FinancialEstimator
                 }}
                 aria-label="Monthly Household Living Expenses"
               />
-              <div className="slider-scale">
-                <span>$2,500/mo</span>
-                <span>$8,000</span>
-                <span>$14,000</span>
-                <span>$20,000/mo</span>
-              </div>
+              <SliderTicks min={2500} max={20000} ticks={[{ value: 2500, label: '$2.5k' }, { value: 8000, label: '$8k' }, { value: 14000, label: '$14k' }, { value: 20000, label: '$20k' }]} />
             </div>
 
             {/* Slider 4: Dependents */}
@@ -231,14 +229,7 @@ export default function FinancialEstimator({ onOpenBooking }: FinancialEstimator
                 }}
                 aria-label="Number of Dependents"
               />
-              <div className="slider-scale">
-                <span>0 Children</span>
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5+</span>
-              </div>
+              <SliderTicks min={0} max={5} ticks={[0, 1, 2, 3, 4, 5].map((n) => ({ value: n, label: n === 5 ? '5+' : String(n) }))} />
             </div>
           </div>
         </div>

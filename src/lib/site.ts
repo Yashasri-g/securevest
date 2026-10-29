@@ -6,6 +6,11 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://securevest
 export const SITE_NAME = 'SecureVest Solutions';
 export const SITE_PHONE = '+1-740-303-2525';
 export const SITE_EMAIL = 'contact@securevestsolutions.com';
+export const SITE_PHONE_DISPLAY = '(740) 303-2525';
+export const SITE_PHONE_TEL = 'tel:+17403032525';
+export const WHATSAPP_URL = 'https://wa.me/17403032525?text=Hi%20SecureVest%2C%20I%27d%20like%20a%20free%20quote.';
+export const INSTAGRAM_URL = 'https://www.instagram.com/securevestsolutions/';
+export const INSTAGRAM_HANDLE = '@securevestsolutions';
 export const DEFAULT_OG_IMAGE = '/images/hero-family.jpg';
 
 /** Blog dates are stored as m/d/yyyy; sitemaps and JSON-LD need ISO dates. */

@@ -3,6 +3,7 @@
 import React from 'react';
 import PushpinTearFooter from '@/components/ui/pushpin-tear-footer';
 import SocialMorphButton from '@/components/SocialMorphButton';
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/lib/site';
 
 export default function Footer() {
   return (
@@ -65,7 +66,9 @@ export default function Footer() {
             title: "navigation",
             links: [
               { label: "Home", href: "/" },
+              { label: "About", href: "/about" },
               { label: "Services", href: "/financial-planning-services" },
+              { label: "FAQ", href: "/faq" },
               { label: "Blog", href: "/blog" },
               { label: "Contact", href: "/contact" },
             ],
@@ -76,7 +79,7 @@ export default function Footer() {
         chat={{ label: "schedule consultation", href: "/contact" }}
         copyright="© 2024–2026 SecureVest Solutions. All rights reserved."
         credit="plan today ! protect tomorrow !"
-        handle={{ label: "@securevest.solutions", href: "/contact" }}
+        handle={{ label: INSTAGRAM_HANDLE, href: INSTAGRAM_URL }}
       />
     </div>
   );

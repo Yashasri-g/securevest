@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import ClientShell from '@/components/ClientShell';
 import JsonLd from '@/components/JsonLd';
-import { DEFAULT_OG_IMAGE, SITE_EMAIL, SITE_NAME, SITE_PHONE, SITE_URL } from '@/lib/site';
+import { DEFAULT_OG_IMAGE, INSTAGRAM_URL, SITE_EMAIL, SITE_NAME, SITE_PHONE, SITE_URL } from '@/lib/site';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -68,6 +68,7 @@ const ORGANIZATION_JSON_LD = {
       image: `${SITE_URL}${DEFAULT_OG_IMAGE}`,
       telephone: SITE_PHONE,
       email: SITE_EMAIL,
+      sameAs: [INSTAGRAM_URL],
       priceRange: '$$',
       currenciesAccepted: 'USD',
       paymentAccepted: 'Cash, Credit Card, Bank Transfer',

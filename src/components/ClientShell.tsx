@@ -5,6 +5,7 @@ import Header from './Header';
 import Footer from './Footer';
 import BookingModal from './BookingModal';
 import LeadPopup from './LeadPopup';
+import ContactDock from './ContactDock';
 
 interface BookingContextType {
   openBooking: () => void;
@@ -31,6 +32,7 @@ export default function ClientShell({ children }: { children: React.ReactNode })
       <main id="main-content">{children}</main>
       <Footer />
       <BookingModal isOpen={isBookingOpen} onClose={closeBooking} />
+      <ContactDock />
       <LeadPopup />
     </BookingContext.Provider>
   );

@@ -34,7 +34,9 @@ export default function Header({ onOpenBooking }: HeaderProps) {
 
   const navItems = [
     { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
     { label: 'Services', href: '/financial-planning-services' },
+    { label: 'FAQ', href: '/faq' },
     { label: 'Blog', href: '/blog' },
     { label: 'Contact', href: '/contact' },
   ];
